@@ -9,7 +9,7 @@ class UsersController < ApiController
 
 	def profile
 		user = User.find_by_auth_token!(request.headers[ :token ])
-		render json: { user: { id: user.id, username: user.username, email: user.email, first_name: user.first_name, last_name: user.last_name, requests: user.requests }}
+		render json: { user: { id: user.id, username: user.username, email: user.email, first_name: user.first_name, last_name: user.last_name, govid: url_for(user.govid), requests: user.requests }}
 	end
 
 	def destroy
@@ -21,6 +21,6 @@ class UsersController < ApiController
 	private
 
 	def user_params
-		params.require(:user).permit( :username, :password, :email, :first_name, :last_name)
+		params.require(:user).permit( :username, :password, :email, :first_name, :last_name, :govid)
 	end	
 end

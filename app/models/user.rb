@@ -2,8 +2,8 @@ class User < ApplicationRecord
 	validates_uniqueness_of :username
 	has_secure_password
 	has_secure_token :auth_token
-	has_many :requests
-	has_one_attached :govid
+	has_many :requests, :dependent => :delete_all
+	has_one_attached :govid, :dependent => :delete_all
 
 	def invalidate_token
 		self.update_columns(auth_token: nil)
