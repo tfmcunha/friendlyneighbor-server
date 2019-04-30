@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_27_205345) do
+ActiveRecord::Schema.define(version: 2019_04_30_214315) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,10 @@ ActiveRecord::Schema.define(version: 2019_04_27_205345) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.binary "type"
+    t.boolean "fulfilled"
+    t.float "lat"
+    t.float "lgt"
     t.index ["user_id"], name: "index_requests_on_user_id"
   end
 
@@ -55,6 +59,17 @@ ActiveRecord::Schema.define(version: 2019_04_27_205345) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "volunteers", force: :cascade do |t|
+    t.bigint "request_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["request_id"], name: "index_volunteers_on_request_id"
+    t.index ["user_id"], name: "index_volunteers_on_user_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "requests", "users", on_delete: :cascade
+  add_foreign_key "volunteers", "requests"
+  add_foreign_key "volunteers", "users"
 end
