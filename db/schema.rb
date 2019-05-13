@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_02_093040) do
+ActiveRecord::Schema.define(version: 2019_05_09_210728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,31 +37,31 @@ ActiveRecord::Schema.define(version: 2019_05_02_093040) do
   end
 
   create_table "requests", force: :cascade do |t|
-    t.string "title"
-    t.text "body"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.binary "req_type"
+    t.bigint "user_id", null: false
+    t.string "title", null: false
+    t.text "body", null: false
+    t.binary "req_type", null: false
     t.boolean "fulfilled"
-    t.float "lat"
-    t.float "lgt"
+    t.float "lat", null: false
+    t.float "lng", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false    
     t.index ["user_id"], name: "index_requests_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.string "email"
-    t.string "password_digest"
-    t.string "auth_token"
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "email", null: false
+    t.string "password_digest", null: false
+    t.string "auth_token", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "volunteers", force: :cascade do |t|
-    t.bigint "request_id"
-    t.bigint "user_id"
+    t.bigint "request_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["request_id"], name: "index_volunteers_on_request_id"
