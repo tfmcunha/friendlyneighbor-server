@@ -11,9 +11,8 @@ class UsersController < ApiController
 	end
 
 	def profile
-		user = User.find_by_auth_token!(request.headers[ :token ])
-		volunteers = Request.where(user_id: user.id )
-		render json: { user: { id: user.id, email: user.email, first_name: user.first_name, last_name: user.last_name, govid: url_for(user.govid), requests: user.requests, volunteers: volunteers } }
+		user = User.find_by_auth_token!(request.headers[ :token ])		
+		render json: user, root: "user", adapter: :json
 	end
 
 	def update

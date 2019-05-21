@@ -1,6 +1,7 @@
 class Request < ApplicationRecord
   belongs_to :user
-  has_many :volunteers, :dependent => :delete_all  #falta migrar para db
+  has_many :volunteers, :dependent => :delete_all   
+  has_many :conversations, :dependent => :delete_all 
 
   validates_presence_of :title, :body, :req_type
 

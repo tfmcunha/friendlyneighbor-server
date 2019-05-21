@@ -7,9 +7,13 @@ class User < ApplicationRecord
 	has_secure_password
 	has_secure_token :auth_token
 
-	has_many :requests, :dependent => :delete_all
-	has_many :volunteers, :dependent => :delete_all   #falta migrar para db
 	has_one_attached :govid, :dependent => :delete_all
+
+	has_many :requests, :dependent => :delete_all
+	has_many :volunteers, :dependent => :delete_all
+	has_many :messages, :dependent => :delete_all
+	has_many :sent_conversations, class_name: 'Conversation', foreign_key: 'sender_id'
+	has_many :received_conversations, class_name: 'Conversation', foreign_key: 'recipient_id'
 
 	def invalidate_token
 		self.update_columns(auth_token: nil)

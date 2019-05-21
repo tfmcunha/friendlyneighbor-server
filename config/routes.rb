@@ -5,5 +5,8 @@ Rails.application.routes.draw do
   resources :users
   resources :requests
   get '/profile' => 'users#profile'
+  resources :conversations, only: [:index, :create]
+  resources :messages, only: [:create]
+  mount ActionCable.server => '/cable'
 
 end

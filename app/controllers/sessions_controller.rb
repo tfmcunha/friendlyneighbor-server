@@ -22,7 +22,8 @@ class SessionsController < ApiController
 	end
 
 	def send_token_for_valid_login_of(user)
-		render json: { token: user.auth_token }
+		render json: user, serializer: TokenSerializer
+		
 	end
 
 	def logout

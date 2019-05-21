@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_09_210728) do
+ActiveRecord::Schema.define(version: 2019_05_20_211420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,16 +36,37 @@ ActiveRecord::Schema.define(version: 2019_05_09_210728) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "conversations", force: :cascade do |t|
+    t.bigint "request_id"
+    t.integer "recipient_id"
+    t.integer "sender_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recipient_id"], name: "index_conversations_on_recipient_id"
+    t.index ["request_id"], name: "index_conversations_on_request_id"
+    t.index ["sender_id"], name: "index_conversations_on_sender_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "body"
+    t.bigint "user_id"
+    t.bigint "conversation_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
   create_table "requests", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "title", null: false
     t.text "body", null: false
     t.binary "req_type", null: false
-    t.boolean "fulfilled"
+    t.boolean "fulfilled", default: false, null: false
     t.float "lat", null: false
     t.float "lng", null: false
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false    
+    t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_requests_on_user_id"
   end
 
@@ -60,8 +81,8 @@ ActiveRecord::Schema.define(version: 2019_05_09_210728) do
   end
 
   create_table "volunteers", force: :cascade do |t|
-    t.bigint "request_id", null: false
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
+    t.bigint "request_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["request_id"], name: "index_volunteers_on_request_id"
@@ -69,6 +90,9 @@ ActiveRecord::Schema.define(version: 2019_05_09_210728) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "conversations", "requests"
+  add_foreign_key "messages", "conversations"
+  add_foreign_key "messages", "users"
   add_foreign_key "requests", "users", on_delete: :cascade
   add_foreign_key "volunteers", "requests"
   add_foreign_key "volunteers", "users"
