@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :users
   resources :requests
   get '/profile' => 'users#profile'
+  get '/owner' => 'requests#owner'
   resources :conversations, only: [:index, :create]
   resources :messages, only: [:create]
   mount ActionCable.server => '/cable'

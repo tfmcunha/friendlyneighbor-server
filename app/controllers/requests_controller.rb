@@ -2,10 +2,13 @@ class RequestsController < ApiController
 	before_action :require_login
 	
 	def index
-		@requests = Request.where("user_id != ?", current_user.id)
-		#requests = Request.search(request.headers(:min_lat, :max_lat, :min_lng, :max_lng))
-		render json: @requests 
-		#render json: { requests: requests.as_json( include: { user: { only: [ :first_name, :last_name ] } } ) }
+		@requests = Request.search(request.headers[:lat], request.headers[:lng]).where("user_id != ?", current_user.id).unfulfilled.visible
+		render json: @requests 		
+	end
+
+	def owner
+		requests = Request.where("user_id = ?", current_user.id)
+		render json: requests
 	end
 
 	def create
@@ -18,4 +21,5 @@ class RequestsController < ApiController
 	def request_params
 		params.require(:request).permit(:user_id, :title, :body, :req_type, :lat, :lng)
 	end
+
 end
