@@ -7,14 +7,14 @@ class MessagesController < ApplicationController
 			ActionCable.server.broadcast(
                 # Broadcast to user/sender private channel
                 "current_user_#{conversation.sender_id}", 
-                conversation.messages
+                {messages: conversation.messages, id: conversation.id}
                 
             )
 
             ActionCable.server.broadcast(
                 # Broadcast to user/receiver private channel
                 "current_user_#{conversation.recipient_id}", 
-                conversation.messages
+                {messages: conversation.messages, id: conversation.id}
             )
 
 			render json: { status: :ok }

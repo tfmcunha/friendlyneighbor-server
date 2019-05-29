@@ -1,5 +1,5 @@
 class VolunteerSerializer < ActiveModel::Serializer
-  attributes :request_id, :username, :owner
+  attributes :id, :request_id, :user_id, :username, :owner
   
   belongs_to :user
   has_many :request

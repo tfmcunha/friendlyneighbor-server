@@ -8,12 +8,12 @@ class ConversationsController < ApiController
 
         if conversation_params[:recipient_id] != conversation_params[:sender_id]  
             if conversation != nil             
-                render json: {conversation_id: conversation.id}
+                render json: conversation
             else
                 conversation = Conversation.create!(conversation_params)   
                 Volunteer.create(user_id: conversation_params[:sender_id], request_id: conversation_params[:request_id])
                 request.visibility
-                render json: {conversation_id: conversation.id}
+                render json: conversation
             end
         end
     end
