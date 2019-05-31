@@ -4,7 +4,8 @@ class ConversationsController < ApiController
 
         users = [conversation_params[:recipient_id], conversation_params[:sender_id]]
         conversation = Conversation.where({request_id: conversation_params[:request_id]}).where({sender_id: [users]}).where({recipient_id: [users]}).first       
-        request = Request.find_by_id(conversation_params[:request_id])
+        
+        request = Request.find(conversation_params[:request_id])
 
         if conversation_params[:recipient_id] != conversation_params[:sender_id]  
             if conversation != nil             
@@ -12,7 +13,6 @@ class ConversationsController < ApiController
             else
                 conversation = Conversation.create!(conversation_params)   
                 Volunteer.create(user_id: conversation_params[:sender_id], request_id: conversation_params[:request_id])
-                request.visibility
                 render json: conversation
             end
         end

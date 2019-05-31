@@ -17,7 +17,7 @@ class UsersController < ApiController
 
 	def update
 		user = User.find_by_auth_token!(request.headers[ :token ])
-    	user.update(user_params)
+    	user.update_attributes(user_params)
     	render json: { status: :ok }
   	end
 
