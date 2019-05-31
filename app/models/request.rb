@@ -1,9 +1,12 @@
 class Request < ApplicationRecord
+  
+
   belongs_to :user
   has_many :volunteers, :dependent => :delete_all   
   has_many :conversations, :dependent => :delete_all 
 
-  validates_presence_of :title, :body, :req_type
+  validates_presence_of :user_id, :title, :body, :req_type, :lat, :lng
+  validates :body, length: { maximum: 300 }
 
   scope :bounds, -> (min_lat, max_lat, min_lng, max_lng) { min_lat && max_lat && min_lng && max_lng ? where('lat >= :min_lat AND lat <= :max_lat AND lng >= :min_lng AND lng <= :max_lng', min_lat: min_lat, max_lat: max_lat, min_lng: min_lng, max_lng: max_lng) : all }
   
@@ -20,7 +23,7 @@ class Request < ApplicationRecord
 
   end
 
-  def self.visible 
+  def self.isVisible 
     where(visible: true)
   end
 
@@ -28,10 +31,6 @@ class Request < ApplicationRecord
     where(fulfilled: false)
   end
 
-  def visibility
-    if self.volunteers.count >= 5
-      update_attributes(:visible => false)
-    end   
-  end
+  
 end
 
