@@ -1,24 +1,10 @@
-class MessagesController < ApplicationController
+class MessagesController < ApiController
+
+	before_action :require_login
+
 	def create
-		message = Message.new(message_params)
-		conversation = Conversation.find(message_params[:conversation_id])
-		if message.save
-
-			ActionCable.server.broadcast(
-                # Broadcast to user/sender private channel
-                "current_user_#{conversation.sender_id}", 
-                {messages: conversation.messages, id: conversation.id}
-                
-            )
-
-            ActionCable.server.broadcast(
-                # Broadcast to user/receiver private channel
-                "current_user_#{conversation.recipient_id}", 
-                {messages: conversation.messages, id: conversation.id}
-            )
-
-			render json: { status: :ok }
-		end
+		message = Message.create(message_params)
+		render json: { status: :ok }	
 	end
 
 	private
