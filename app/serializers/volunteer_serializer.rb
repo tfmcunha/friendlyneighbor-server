@@ -2,7 +2,7 @@ class VolunteerSerializer < ActiveModel::Serializer
   attributes :id, :request_id, :user_id, :username, :owner
   
   belongs_to :user
-  has_many :request
+  belongs_to :request
 
   def username
   	object.user.first_name+" "+object.user.last_name
