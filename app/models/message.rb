@@ -4,17 +4,26 @@ class Message < ApplicationRecord
 
 	after_save :broadcast
 
-	def broadcast()  		
-		ActionCable.server.broadcast(
+	def broadcast()  	
+    ActionCable.server.broadcast(
             # Broadcast to user/sender private channel
-            "current_user_#{self.conversation.sender_id}", 
-            {messages: self.conversation.messages, id: self.conversation.id}
+            "conversation_#{self.conversation.id}", 
+            self.conversation.messages
         )
 
-		ActionCable.server.broadcast(
-            # Broadcast to user/receiver private channel
-            "current_user_#{self.conversation.recipient_id}", 
-            {messages: self.conversation.messages, id: self.conversation.id}
-        )
+		
 	end
 end
+
+
+# Create our resource
+#post = Post.create(title: "Sample post", body: "I love Active Model Serializers!")
+
+# Optional options parameters for both the serializer and instance
+#options = {serializer: PostDetailedSerializer, username: 'sample user'}
+
+# Create a serializable resource instance
+#serializable_resource = ActiveModelSerializers::SerializableResource.new(post, options)
+
+# Convert your resource into json
+#model_json = serializable_resource.as_json

@@ -1,6 +1,6 @@
 class Request < ApplicationRecord
+  after_save :requestCount
   
-
   belongs_to :user
   has_many :volunteers, :dependent => :delete_all   
   has_many :conversations, :dependent => :delete_all 
@@ -29,6 +29,12 @@ class Request < ApplicationRecord
 
   def self.unfulfilled
     where(fulfilled: false)
+  end
+
+  def requestCount
+    count = Request.unfulfilled.count
+    ActionCable.server.broadcast("RequestCount", count)                    
+    
   end
 
   

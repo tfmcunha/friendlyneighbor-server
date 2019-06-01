@@ -1,5 +1,5 @@
 class RequestsController < ApiController
-	before_action :require_login
+	skip_before_action :require_login, only: [ :count ], raise: false
 	before_action :set_request, only: [:update]
 	
 	def index
@@ -8,11 +8,15 @@ class RequestsController < ApiController
 	end
 
 	def owner
-		requests = Request.where("user_id = ?", current_user.id)
+		requests = Request.where("user_id = ?", current_user.id).unfulfilled
 		isVolunteer = Request.unfulfilled.joins(:volunteers).where(volunteers: {user_id: current_user.id})
 		render json: {requests: ActiveModelSerializers::SerializableResource.new(requests),
 					isVolunteer: ActiveModelSerializers::SerializableResource.new(isVolunteer)}
+	end
 
+	def count
+		count = Request.unfulfilled.count
+		render json: count
 	end
 
 	def create
