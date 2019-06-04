@@ -1,9 +1,10 @@
 class MessagesController < ApiController
 
-	before_action :require_login
-
+	#before_action :require_login
+	
+	
 	def create
-		message = Message.create(message_params)
+		Message.create(message_params)
 		render json: { status: :ok }	
 	end
 

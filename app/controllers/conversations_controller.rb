@@ -1,29 +1,12 @@
 class ConversationsController < ApiController
+	#before_action :require_login	
 
-	def create
-
-        users = [conversation_params[:recipient_id], conversation_params[:sender_id]]
-        conversation = Conversation.where({request_id: conversation_params[:request_id]}).where({sender_id: [users]}).where({recipient_id: [users]}).first       
-        
-        request = Request.find(conversation_params[:request_id])
-
-        if conversation_params[:recipient_id] != conversation_params[:sender_id]  
-            if conversation != nil             
-                render json: conversation
-            else
-                conversation = Conversation.create!(conversation_params)   
-                Volunteer.create(user_id: conversation_params[:sender_id], request_id: conversation_params[:request_id])
-                render json: conversation
-            end
+	def getconversation     
+		conversation = Conversation.where({request_id: request.headers[ :request ]}).where({sender_id: request.headers[ :sender ]}).first 	
+		if conversation == nil
+			render json: {message: "not found"}
+        else
+        	render json: conversation
         end
     end
-
-
-
-    private
-  
-    def conversation_params
-        params.require(:conversation).permit(:request_id, :sender_id, :recipient_id)
-    end
-
 end
