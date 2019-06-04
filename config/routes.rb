@@ -7,9 +7,9 @@ Rails.application.routes.draw do
   resources :requests
   get '/profile' => 'users#profile'
   get '/owner' => 'requests#owner'
-  resources :conversations, only: [:index, :create]
+  get '/conversation' => 'conversations#getconversation'
   resources :messages, only: [:create]
-  resources :volunteers, only: [ :destroy ]
+  resources :volunteers, only: [ :create, :destroy ]
   mount ActionCable.server => '/cable'
 
 end
