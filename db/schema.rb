@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_24_102949) do
+ActiveRecord::Schema.define(version: 2019_06_02_153650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 2019_05_24_102949) do
     t.bigint "user_id", null: false
     t.string "title", null: false
     t.text "body", null: false
-    t.binary "req_type", null: false
+    t.string "req_type", null: false
     t.boolean "fulfilled", default: false, null: false
     t.float "lat", null: false
     t.float "lng", null: false
