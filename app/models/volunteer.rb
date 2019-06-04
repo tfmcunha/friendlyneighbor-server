@@ -7,6 +7,7 @@ class Volunteer < ApplicationRecord
   def visibility
     if self.request.volunteers.count >= 5
     	self.request.update_attributes(:visible => false)
+    	VisibilityJob.set(wait: 24.hour).perform_later(self)
   	end   
   end
 end
