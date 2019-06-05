@@ -1,17 +1,16 @@
 class MessageBroadcastJob < ApplicationJob
   queue_as :default
 
-  def perform(conversation_id)
-    conversation = Conversation.find(conversation_id)
-    broadcast(conversation)
+  def perform(message)    
+    broadcast(message)
   end
 
   private
 
-  def broadcast(conversation)
+  def broadcast(message)
+    outbound = ActiveModelSerializers::SerializableResource.new(message)
     ActionCable.server.broadcast(
-      "conversation_#{conversation.id}",
-      {messages: ActiveModelSerializers::SerializableResource.new(conversation.messages), id: conversation.id}
+      "conversation_#{message.conversation_id}", { message: outbound, id: message.conversation_id}
     )
   end
 end
