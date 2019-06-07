@@ -22,7 +22,7 @@ class VolunteersController < ApiController
 
 	def destroy
 		@volunteer.destroy
-		render json: :ok
+		render json: {status: :created}	
 	end
 
 	private	

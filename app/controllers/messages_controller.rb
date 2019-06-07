@@ -5,7 +5,7 @@ class MessagesController < ApiController
 	
 	def create
 		Message.create(message_params)
-		render json: { status: :ok }	
+		render json: {status: :created}	
 	end
 
 	private
