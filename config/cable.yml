@@ -6,5 +6,5 @@ test:
 
 production:
   adapter: redis
-  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
-  channel_prefix: FriendlyNeighbour_production
+  url: <%= ENV.fetch("REDIS_URL") { "redis://h:p52b69f0b3e9a158ea9df69b4aac9376b141ff22b5d38ac808647f7a97d6fbc4d@ec2-3-212-100-136.compute-1.amazonaws.com:27009
+" } %>
