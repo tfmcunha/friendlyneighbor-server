@@ -15,9 +15,12 @@ class VolunteersController < ApiController
 			Volunteer.create(volunteer_params)
 			unless conversation.exists?
 				@conversation = Conversation.create!(request_id: request.id, sender_id: volunteer_params[:user_id], recipient_id: request.user_id)
+				render json: @conversation	
 			end
+		else
+			render json: @conversation
 		end
-		render json: @conversation
+		
 	end	
 
 	def destroy
