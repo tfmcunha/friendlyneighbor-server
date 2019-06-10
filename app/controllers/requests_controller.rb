@@ -4,7 +4,7 @@ class RequestsController < ApiController
 	
 	def index
 		@requests = Request.search(request.headers[:lat], request.headers[:lng]).where("user_id != ?", current_user.id).unfulfilled.isVisible
-		render json: @requests 		
+		render json: @requests 				
 	end
 
 	def owner
