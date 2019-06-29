@@ -15,7 +15,7 @@
 # gem 'pg'
 #
 default: &default
-  adapter: postgresql
+  adapter: sqlite3
   encoding: unicode
   # For details on connection pooling, see Rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
@@ -24,8 +24,6 @@ default: &default
 development:
   <<: *default
   database: FriendlyNeighbour_development
-  username: server
-  password: pw123
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -83,7 +81,7 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
+  adapter: postgresql
   database: FriendlyNeighbour_production
   username: FriendlyNeighbour
   password: <%= ENV['FRIENDLYNEIGHBOUR_DATABASE_PASSWORD'] %>

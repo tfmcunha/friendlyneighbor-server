@@ -3,6 +3,7 @@ class RequestSerializer < ActiveModel::Serializer
   
   belongs_to :user
   has_many :volunteers
+  has_many :conversations
 
   def user_name
   	object.user.first_name+" "+object.user.last_name  	

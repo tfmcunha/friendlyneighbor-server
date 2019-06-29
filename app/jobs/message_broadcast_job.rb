@@ -12,5 +12,8 @@ class MessageBroadcastJob < ApplicationJob
     ActionCable.server.broadcast(
       "conversation_#{message.conversation_id}", { message: outbound, id: message.conversation_id}
     )
+    ActionCable.server.broadcast("Alert", {
+      user_id: message.user_id, username: "#{message.user.first_name} #{message.user.last_name}" }
+    )
   end
 end

@@ -17,7 +17,7 @@ class VolunteersController < ApiController
 				conversation = Conversation.create!(request_id: request.id, sender_id: volunteer_params[:user_id], recipient_id: request.user_id)
 				render json: conversation	
 			else
-				render json: conversation	
+				render json: conversation.first	
 			end
 		else
 			render json: conversation.first
