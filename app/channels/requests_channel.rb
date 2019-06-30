@@ -1,6 +1,6 @@
-class AlertChannel < ApplicationCable::Channel
+class RequestsChannel < ApplicationCable::Channel
   def subscribed  	
-    stream_from "Alert"
+    stream_from "Request_#{params[:request]}"
   end
 
   def unsubscribed
