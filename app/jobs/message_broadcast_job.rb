@@ -10,7 +10,7 @@ class MessageBroadcastJob < ApplicationJob
   def broadcast(message)
     outbound = ActiveModelSerializers::SerializableResource.new(message)
     ActionCable.server.broadcast(
-      "conversation_#{message.conversation_id}", { message: outbound, id: message.conversation_id}
+      "conversation_#{message.conversation_id}", { message: outbound }
     )
     ActionCable.server.broadcast("Request_#{message.conversation.request_id}", {
       conversation_id: message.conversation_id, 

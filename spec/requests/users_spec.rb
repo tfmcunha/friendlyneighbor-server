@@ -6,5 +6,6 @@ RSpec.describe "Users", type: :request do
     		get "/profile"
       		expect(response).to have_http_status(:unauthorized)
     	end
+
   	end
 end

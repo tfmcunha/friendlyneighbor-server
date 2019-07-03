@@ -7,9 +7,11 @@ RSpec.describe "Volunteers", type: :request do
       	end
 
 		it 'is denied without token' do			
-			headers = { "CONTENT_TYPE" => "application/json" }
+			#headers = { "CONTENT_TYPE" => "application/json" }
 			post "/volunteers", params: valid_params
 			expect(response).to have_http_status(:unauthorized)
 		end
+
+
 	end  
 end
